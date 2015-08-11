@@ -1,11 +1,11 @@
 {
   "name": "storage.io",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "localStorage and sessionStorage utils",
   "main": "build/index.js",
   "scripts": {
     "test": "webpack-dev-server --port 3000 --config test/webpack.js --hot --colors",
-    "build": "webpack --config webpack.js"
+    "build": "babel lib --out-dir build"
   },
   "repository": "onebook/storage.io",
   "keywords": [
