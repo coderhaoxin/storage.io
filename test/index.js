@@ -1,6 +1,6 @@
 'use strict'
 
-import { session, local, Queue } from '../'
+import { session, local, Queue, Store } from '../'
 import { expect } from 'chai'
 
 describe('## storage.io', function() {
@@ -17,6 +17,15 @@ describe('## storage.io', function() {
 
       testQueue(queue)
     })
+
+    it('store', function() {
+      const store = new Store({
+        name: 'local-store',
+        type: 'local'
+      })
+
+      testStore(store)
+    })
   })
 
   describe('# session storage', function() {
@@ -31,6 +40,15 @@ describe('## storage.io', function() {
       })
 
       testQueue(queue)
+    })
+
+    it('store', function() {
+      const store = new Store({
+        name: 'session-store',
+        type: 'session'
+      })
+
+      testStore(store)
     })
   })
 })
@@ -71,9 +89,7 @@ function testQueue(queue) {
   })
 
   expect(queue.size()).to.equal(3)
-
   expect(queue.shift()).to.equal(1)
-
   expect(queue.pop()).to.deep.equal({
     name: 'test'
   })
@@ -83,4 +99,38 @@ function testQueue(queue) {
   queue.clear()
 
   expect(queue.size()).to.equal(0)
+}
+
+function testStore(store) {
+  store.set('a', 1)
+  store.set('b', 's')
+  store.set('c', {
+    name: 'test'
+  })
+
+  expect(store.get('a')).to.equal(1)
+  expect(store.get('b')).to.equal('s')
+  expect(store.get('c')).to.deep.equal({
+    name: 'test'
+  })
+
+  store.set('a', 2)
+  expect(store.get('a')).to.equal(2)
+
+  expect(store.keys().sort()).to.deep.equal(['a', 'b', 'c'])
+  expect(store.all()).to.deep.equal({
+    a: 2,
+    b: 's',
+    c: {
+      name: 'test'
+    }
+  })
+  expect(store.entities()).to.deep.equal([
+    2, 's', { name: 'test' }
+  ])
+
+  expect(store.size()).to.equal(3)
+
+  store.clear()
+  expect(store.size()).to.equal(0)
 }

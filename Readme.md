@@ -30,9 +30,7 @@ locat.clear()
 * basic queue
 
 ```js
-import {
-  Queue,
-} from 'storage.io'
+import { Queue } from 'storage.io'
 
 const queue = new Queue({
   name: 'local-queue',
@@ -51,6 +49,32 @@ queue.pop()
 queue.size()
 
 queue.clear()
+```
+
+* basic store
+
+```js
+import { Store } from 'storage.io'
+
+const store = new Store({
+  name: 'local-store',
+  type: 'local'
+})
+
+store.set('a', 1)
+store.set('b', 's')
+store.set('c', {
+  name: 'test'
+})
+
+store.get('a')
+
+store.entities()
+store.keys()
+store.all()
+
+store.clear()
+store.size()
 ```
 
 ### License
