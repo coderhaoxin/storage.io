@@ -34,6 +34,7 @@ import { Queue } from 'storage.io'
 
 const queue = new Queue({
   name: 'local-queue',
+  limit: 100,
   type: 'local'
 })
 

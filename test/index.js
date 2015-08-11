@@ -1,6 +1,6 @@
 'use strict'
 
-import { session, local, Queue, Store } from '../'
+import { session, local, Queue, Store } from '../lib'
 import { expect } from 'chai'
 
 describe('## storage.io', function() {
@@ -16,6 +16,16 @@ describe('## storage.io', function() {
       })
 
       testQueue(queue)
+    })
+
+    it('queue - limit', function() {
+      const queue = new Queue({
+        name: 'local-queue-limit',
+        type: 'local',
+        limit: 2
+      })
+
+      testQueueLimit(queue)
     })
 
     it('store', function() {
@@ -40,6 +50,16 @@ describe('## storage.io', function() {
       })
 
       testQueue(queue)
+    })
+
+    it('queue - limit', function() {
+      const queue = new Queue({
+        name: 'session-queue-limit',
+        type: 'session',
+        limit: 2
+      })
+
+      testQueueLimit(queue)
     })
 
     it('store', function() {
@@ -99,6 +119,24 @@ function testQueue(queue) {
   queue.clear()
 
   expect(queue.size()).to.equal(0)
+}
+
+function testQueueLimit(queue) {
+  queue.push(1)
+  expect(queue.size()).to.equal(1)
+  expect(queue.all()).to.deep.equal([1])
+
+  queue.push(2)
+  expect(queue.size()).to.equal(2)
+  expect(queue.all()).to.deep.equal([1, 2])
+
+  queue.push(3)
+  expect(queue.size()).to.equal(2)
+  expect(queue.all()).to.deep.equal([2, 3])
+
+  queue.push(4)
+  expect(queue.size()).to.equal(2)
+  expect(queue.all()).to.deep.equal([3, 4])
 }
 
 function testStore(store) {
