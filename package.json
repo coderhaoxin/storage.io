@@ -1,0 +1,29 @@
+{
+  "name": "storage.io",
+  "version": "0.1.0",
+  "description": "localStorage and sessionStorage utils",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "webpack-dev-server --port 3000 --config test/webpack.js --hot --colors"
+  },
+  "repository": "onebook/storage.io",
+  "keywords": [
+    "sessionStorage",
+    "localStorage",
+    "queue"
+  ],
+  "files": [
+    "lib/"
+  ],
+  "author": "haoxin",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "5",
+    "babel-loader": "5",
+    "chai": "3",
+    "mocha": "2",
+    "mocha-loader": "0",
+    "webpack": "1",
+    "webpack-dev-server": "1"
+  }
+}
