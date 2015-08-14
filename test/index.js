@@ -169,6 +169,9 @@ function testStore(store) {
 
   expect(store.size()).to.equal(3)
 
+  expect(store.remove('a')).to.equal(2)
+  expect(store.size()).to.equal(2)
+
   store.clear()
   expect(store.size()).to.equal(0)
 }

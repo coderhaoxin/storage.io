@@ -70,6 +70,7 @@ store.set('c', {
 
 store.get('a')
 
+store.remove('a')
 store.entities()
 store.keys()
 store.all()
