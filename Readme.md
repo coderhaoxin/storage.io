@@ -15,16 +15,16 @@ import {
   local    // localStorage
 } from 'storage.io'
 
-locat.set('i', 123)
-locat.set('f', 12.3)
-locat.set('s', '123')
-locat.set('j', {
+local.set('i', 123)
+local.set('f', 12.3)
+local.set('s', '123')
+local.set('j', {
   name: 'test'
 })
 
-locat.remove('i')
+local.remove('i')
 
-locat.clear()
+local.clear()
 ```
 
 * basic queue
@@ -78,6 +78,34 @@ store.all()
 store.clear()
 store.size()
 ```
+
+### APIs
+
+* storage: (session|local)
+  - `set(key, value)`
+  - `get(key)`
+  - `remove(key)`
+  - `clear()`
+
+* queue
+  - `push(value)`
+  - `shift()`
+  - `pop()`
+  - `all()`
+  - `size()`
+  - `clear()`
+  - `destroy()`
+
+* store
+  - `set(key, value)`
+  - `get(key)`
+  - `all()`
+  - `keys()`
+  - `entities()`
+  - `size()`
+  - `remove(key)`
+  - `clear()`
+  - `destroy()`
 
 ### License
 MIT

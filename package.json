@@ -1,6 +1,6 @@
 {
   "name": "storage.io",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "localStorage and sessionStorage utils",
   "main": "build/index.js",
   "scripts": {

@@ -1,6 +1,7 @@
 'use strict'
 
 import { session, local, Queue, Store } from '../lib'
+import { getStorage } from '../lib/util'
 import { expect } from 'chai'
 
 describe('## storage.io', function() {
@@ -10,31 +11,31 @@ describe('## storage.io', function() {
     })
 
     it('queue', function() {
-      const queue = new Queue({
+      const opts = {
         name: 'local-queue',
         type: 'local'
-      })
+      }
 
-      testQueue(queue)
+      testQueue(opts)
     })
 
     it('queue - limit', function() {
-      const queue = new Queue({
+      const opts = {
         name: 'local-queue-limit',
         type: 'local',
         limit: 2
-      })
+      }
 
-      testQueueLimit(queue)
+      testQueueLimit(opts)
     })
 
     it('store', function() {
-      const store = new Store({
+      const opts = {
         name: 'local-store',
         type: 'local'
-      })
+      }
 
-      testStore(store)
+      testStore(opts)
     })
   })
 
@@ -44,31 +45,31 @@ describe('## storage.io', function() {
     })
 
     it('queue', function() {
-      const queue = new Queue({
+      const opts = {
         name: 'session-queue',
         type: 'session'
-      })
+      }
 
-      testQueue(queue)
+      testQueue(opts)
     })
 
     it('queue - limit', function() {
-      const queue = new Queue({
+      const opts = {
         name: 'session-queue-limit',
         type: 'session',
         limit: 2
-      })
+      }
 
-      testQueueLimit(queue)
+      testQueueLimit(opts)
     })
 
     it('store', function() {
-      const store = new Store({
+      const opts = {
         name: 'session-store',
         type: 'session'
-      })
+      }
 
-      testStore(store)
+      testStore(opts)
     })
   })
 })
@@ -101,7 +102,9 @@ function basic(storage) {
   expect(storage.get('j')).to.equal(undefined)
 }
 
-function testQueue(queue) {
+function testQueue(opts) {
+  const queue = new Queue(opts)
+
   queue.push(1)
   queue.push('a')
   queue.push({
@@ -119,9 +122,15 @@ function testQueue(queue) {
   queue.clear()
 
   expect(queue.size()).to.equal(0)
+
+  testDestroy(opts.type, opts.name + '-queue', '[]')
+  queue.destroy()
+  testDestroy(opts.type, opts.name + '-queue', null)
 }
 
-function testQueueLimit(queue) {
+function testQueueLimit(opts) {
+  const queue = new Queue(opts)
+
   queue.push(1)
   expect(queue.size()).to.equal(1)
   expect(queue.all()).to.deep.equal([1])
@@ -139,7 +148,9 @@ function testQueueLimit(queue) {
   expect(queue.all()).to.deep.equal([3, 4])
 }
 
-function testStore(store) {
+function testStore(opts) {
+  const store = new Store(opts)
+
   store.set('a', 1)
   store.set('b', 's')
   store.set('c', {
@@ -174,4 +185,12 @@ function testStore(store) {
 
   store.clear()
   expect(store.size()).to.equal(0)
+
+  testDestroy(opts.type, opts.name + '-store', '{}')
+  store.destroy()
+  testDestroy(opts.type, opts.name + '-store', null)
+}
+
+function testDestroy(type, name, value) {
+  expect(getStorage(type).getItem(name)).to.equal(value)
 }
