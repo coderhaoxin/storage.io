@@ -5,7 +5,8 @@ module.exports = {
     index: [
       'webpack-dev-server/client?http://localhost:3000',
       'webpack/hot/dev-server',
-      'mocha!./test/index.js'
+      'mocha!./test/index.js',
+      'mocha!./test/util.js'
     ]
   },
 

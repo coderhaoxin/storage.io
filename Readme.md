@@ -83,6 +83,7 @@ store.size()
 
 * storage: (session|local)
   - `set(key, value)`
+  - `set(key, value, expire)`
   - `get(key)`
   - `remove(key)`
   - `clear()`

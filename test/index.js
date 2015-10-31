@@ -1,16 +1,21 @@
+
 'use strict'
 
 import { session, local, Queue, Store } from '../lib'
 import { getStorage } from '../lib/util'
 import { expect } from 'chai'
 
-describe('## storage.io', function() {
-  describe('# local storage', function() {
-    it('set(), get(), remove(), clear()', function() {
+describe('## storage.io', () => {
+  describe('# local storage', () => {
+    it('set(), get(), remove(), clear()', () => {
       basic(local)
     })
 
-    it('queue', function() {
+    it('expire', (done) => {
+      expire(local, done)
+    })
+
+    it('queue', () => {
       const opts = {
         name: 'local-queue',
         type: 'local'
@@ -19,7 +24,7 @@ describe('## storage.io', function() {
       testQueue(opts)
     })
 
-    it('queue - limit', function() {
+    it('queue - limit', () => {
       const opts = {
         name: 'local-queue-limit',
         type: 'local',
@@ -29,7 +34,7 @@ describe('## storage.io', function() {
       testQueueLimit(opts)
     })
 
-    it('store', function() {
+    it('store', () => {
       const opts = {
         name: 'local-store',
         type: 'local'
@@ -39,12 +44,16 @@ describe('## storage.io', function() {
     })
   })
 
-  describe('# session storage', function() {
-    it('set(), get(), remove(), clear()', function() {
+  describe('# session storage', () => {
+    it('set(), get(), remove(), clear()', () => {
       basic(session)
     })
 
-    it('queue', function() {
+    it('expire', (done) => {
+      expire(session, done)
+    })
+
+    it('queue', () => {
       const opts = {
         name: 'session-queue',
         type: 'session'
@@ -53,7 +62,7 @@ describe('## storage.io', function() {
       testQueue(opts)
     })
 
-    it('queue - limit', function() {
+    it('queue - limit', () => {
       const opts = {
         name: 'session-queue-limit',
         type: 'session',
@@ -63,7 +72,7 @@ describe('## storage.io', function() {
       testQueueLimit(opts)
     })
 
-    it('store', function() {
+    it('store', () => {
       const opts = {
         name: 'session-store',
         type: 'session'
@@ -100,6 +109,23 @@ function basic(storage) {
   expect(storage.get('f')).to.equal(undefined)
   expect(storage.get('s')).to.equal(undefined)
   expect(storage.get('j')).to.equal(undefined)
+}
+
+function expire(storage, done) {
+  storage.set('e1', 1, '1s')
+  storage.set('e2', 2, '1')
+  storage.set('e3', 3, 1)
+
+  expect(storage.get('e1'), 1)
+  expect(storage.get('e2'), 2)
+  expect(storage.get('e3'), 3)
+
+  setTimeout(() => {
+    expect(storage.get('e1'), undefined)
+    expect(storage.get('e2'), undefined)
+    expect(storage.get('e3'), undefined)
+    done()
+  }, 1500)
 }
 
 function testQueue(opts) {
