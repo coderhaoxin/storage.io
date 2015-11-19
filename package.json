@@ -1,6 +1,6 @@
 {
   "name": "storage.io",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "localStorage and sessionStorage utils",
   "main": "build/index.js",
   "scripts": {
@@ -24,7 +24,6 @@
   "devDependencies": {
     "babel-core": "5",
     "babel-loader": "5",
-    "chai": "3",
     "mocha": "2",
     "mocha-loader": "0",
     "webpack": "1",

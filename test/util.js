@@ -1,8 +1,6 @@
 
-'use strict'
-
+import { strictEqual as equal } from 'assert'
 import { getExpire } from '../lib/util'
-import { expect } from 'chai'
 
 const ONE_SECOND = 1000
 const ONE_MINUTE = 60 * ONE_SECOND
@@ -11,35 +9,36 @@ const ONE_DAY = 24 * ONE_HOUR
 
 describe('## util', () => {
   describe('# getExpire', () => {
-    const now = Date.now()
+    const check = (expire, duration) => {
+      const now = Date.now()
+      const valid = (getExpire(expire) - now >= duration) &&
+       (getExpire(expire) - now < duration + ONE_SECOND)
 
-    const above = (expire) => {
-      return getExpire(expire) - now >= 0
+      equal(valid, true)
     }
 
     it('2 day', () => {
-      expect(above('2d'), true)
+      check('2d', 2 * ONE_DAY)
     })
 
     it('48 hour', () => {
-      expect(above('48h'), true)
+      check('48h', 48 * ONE_HOUR)
     })
 
     it('2 minute', () => {
-      expect(above('2m'), true)
+      check('2m', 2 * ONE_MINUTE)
     })
 
     it('2 second - 2s', () => {
-      expect(above('2s'), true)
+      check('2s', 2 * ONE_SECOND)
     })
 
     it('2 second - `2`', () => {
-      expect(above('2'), true)
+      check('2', 2 * ONE_SECOND)
     })
 
     it('2 second - 2', () => {
-      expect(above(2), true)
+      check(2, 2 * ONE_SECOND)
     })
   })
 })
-
