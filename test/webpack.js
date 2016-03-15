@@ -3,8 +3,6 @@
 module.exports = {
   entry: {
     index: [
-      'webpack-dev-server/client?http://localhost:3000',
-      'webpack/hot/dev-server',
       'mocha!./test/index.js',
       'mocha!./test/util.js'
     ]
@@ -12,7 +10,8 @@ module.exports = {
 
   output: {
     path: __dirname,
-    filename: 'test-bundle.js'
+    filename: 'test.build.js',
+    publicPath: 'http://localhost:3000/test'
   },
 
   module: {

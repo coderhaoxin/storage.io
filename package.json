@@ -1,6 +1,6 @@
 {
   "name": "storage.io",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "localStorage and sessionStorage utils",
   "main": "build/index.js",
   "scripts": {
@@ -8,12 +8,13 @@
     "build": "babel lib --out-dir build",
     "prepublish": "npm run build"
   },
-  "repository": "onebook/storage.io",
+  "repository": "coderhaoxin/storage.io",
   "keywords": [
     "sessionStorage",
     "localStorage",
     "storage",
-    "queue"
+    "queue",
+    "store"
   ],
   "files": [
     "build/",
@@ -22,8 +23,10 @@
   "author": "haoxin",
   "license": "MIT",
   "devDependencies": {
-    "babel-core": "5",
-    "babel-loader": "5",
+    "babel-cli": "6",
+    "babel-core": "6",
+    "babel-loader": "6",
+    "babel-preset-es2015": "6",
     "mocha": "2",
     "mocha-loader": "0",
     "webpack": "1",
