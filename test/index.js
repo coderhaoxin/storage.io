@@ -5,7 +5,7 @@ import { getStorage } from '../lib/util'
 
 describe('## storage.io', () => {
   describe('# local storage', () => {
-    it('set(), get(), remove(), clear()', () => {
+    it('set(), get(), patch(), remove(), clear()', () => {
       basic(local)
     })
 
@@ -43,7 +43,7 @@ describe('## storage.io', () => {
   })
 
   describe('# session storage', () => {
-    it('set(), get(), remove(), clear()', () => {
+    it('set(), get(), patch(), remove(), clear()', () => {
       basic(session)
     })
 
@@ -89,11 +89,19 @@ function basic(storage) {
     name: 'test'
   })
 
+  storage.patch('p', {a: 1})
+  storage.patch('p', {b: 2})
+  storage.patch('p', {a: 'a'})
+
   equal(storage.get('i'), 123)
   equal(storage.get('f'), 12.3)
   equal(storage.get('s'), '123')
   deepEqual(storage.get('j'), {
     name: 'test'
+  })
+  deepEqual(storage.get('p'), {
+    a: 'a',
+    b: 2
   })
 
   storage.remove('i')

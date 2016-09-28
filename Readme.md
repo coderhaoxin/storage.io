@@ -85,6 +85,7 @@ store.size()
   - `set(key, value)`
   - `set(key, value, expire)`
   - `get(key)`
+  - `patch(key, updated)`
   - `remove(key)`
   - `clear()`
 
